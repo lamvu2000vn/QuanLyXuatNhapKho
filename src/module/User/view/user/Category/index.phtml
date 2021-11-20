@@ -1,0 +1,77 @@
+<?php
+
+use User\Form\Category\addCategoryForm;
+
+$title = 'Category';
+$this->headTitle($title);
+$this->layout('layout/admin'); 
+$i=1;
+?>
+<h1 style='text-align: center;'>Category</h1>
+<div class='top'>
+<!--<button type="button" class='btn btn-primary' data-toggle="modal" data-target="#myModal">Add Categoory</button>-->
+<a href=<?= $this->url('profile/category', ['action' => 'add']) ?> class='btn btn-primary'>Add History</a>
+</div>
+
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($category as $form) : ?>
+        
+        <tr>
+            <td><?php echo $i?></td>
+            <td><?php echo $form['name']?></td>
+            <td><?php echo $form['status']?></td>
+           <td>
+                <a href=<?= $this->url('profile/category', ['action' => 'edit','id'=>$form['cat_id']]) ?> class='btn btn-info'><i class='fas fa-edit'></i></a>
+                <button type="submit" onclick="deleteCat(<?php echo $form['cat_id']?>,'<?php echo $form['name']?>')" class='btn btn-danger'><i class='fas fa-trash'></i></button>
+            </td>
+        </tr>
+        <?php $i++;?>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<!-- Modal delete -->
+<div class="modal fade" id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <?php
+            $form=new addCategoryForm();
+            $form->setAttribute('action', $this->url('profile/category', ['action' => 'delete']));
+            $form->prepare();
+    ?>
+     <?=$this->form()->openTag($form);?>
+        <div class="modal-header">
+          <h5 class="modal-title" id="label_delete"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure that you want to delete "<b id='name'></b>"
+            <?=$this->formHidden($form->get('cat_id'));?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type='submit' class="btn btn-danger">Yes</button>
+        </div>
+        <?=$this->form()->closeTag();?>
+    </div>
+  </div>
+</div>
+<script>
+
+function deleteCat(id,name){
+    $('#name').html(name);
+    $('#cat_id').val(id);
+    //$('#del_form').attr('action', 'item/delete');
+    $('#delete_modal').modal('show');
+  }
+    
+</script>

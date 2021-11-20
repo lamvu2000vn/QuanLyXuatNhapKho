@@ -1,0 +1,87 @@
+<?php
+
+use User\Form\Account\AddAccountForm;
+use User\Form\Account\AddActionForm;
+
+$title = 'Account';
+$this->headTitle($title);
+$this->layout('layout/admin'); 
+$i=1;
+?>
+<h1 style='text-align: center;'>ACCOUNT</h1>
+<div class='top'>
+   
+</div>
+
+
+
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Stt</th>
+            <th>UserName</th>
+            <th>email</th>
+           
+            <th>BirthDay</th>
+            <th>Gender</th>
+            <th>Photo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($account as $account) : ?>
+        <tr>
+            <td style='padding-top: 30px'><?php echo $i;$i++;?></td>
+            <td style='padding-top: 30px'><?php echo $account['username'];?></td>
+            <td>
+                <img src="<?= $this->basePath('img/hinhminhhoa/') ?><?php echo $account['photo'] ?>"" alt='image' width="150px">
+            </td>
+            <td style='padding-top: 30px'><?php echo $account['email'];?></td>
+            <td style='padding-top: 30px'><?php echo $account['birthday'];?></td>
+            <td style='padding-top: 30px'><?php echo $account['gender'];?></td>
+            
+            <td style='padding-top: 25px'>
+                <a href=<?= $this->url('profile/account', ['action' => 'edit', 'id' => $account['id'] ])?> class='btn btn-info'><i class='fas fa-edit'></i></a>
+                <a class='btn btn-danger delete_button' onclick="deleteaccount(<?php echo $account['id']?>,'<?php echo $account['username']?>')" ><i class='fas fa-trash'></i></a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<!-- Modal delete -->
+<div class="modal fade" id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <?php
+            $form=new AddAccountForm();
+            $form->setAttribute('action', $this->url('profile/account', ['action' => 'delete']));
+            $form->prepare();
+    ?>
+     <?=$this->form()->openTag($form);?>
+        <div class="modal-header">
+          <h5 class="modal-title" id="label_delete"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure that you want to delete "<b id='name'></b>"
+            <?=$this->formHidden($form->get('users_id'));?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type='submit' class="btn btn-danger">Yes</button>
+        </div>
+        <?=$this->form()->closeTag();?>
+    </div>
+  </div>
+</div>
+<script>
+
+function deleteaccount(id,name){
+    $('#name').html(name);
+    $('#users_id').val(id);
+    //$('#del_form').attr('action', 'item/delete');
+    $('#delete_modal').modal('show');
+  }
+    
+</script>

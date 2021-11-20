@@ -1,0 +1,60 @@
+<?php
+
+$title = 'Add history';
+$this->headTitle($title);
+$this->layout('layout/admin'); ?>
+
+<div class='col-md-6 offset-3'>
+    <div style='text-align: right;'><h1><?= $this->escapeHtml($title) ?></h1></div><hr>
+
+    <?php 
+    $form->setAttribute('action', $this->url('profile/warehouse', ['action' => 'add']));
+    $form->prepare();
+
+    echo $this->form()->openTag($form); ?>
+
+    <!-- ware_id & item_id -->
+    <p>
+        <?= $this->formHidden($form->get('ware_id')) ?>
+        <?= $this->formLabel($form->get('item_id')) ?>
+        <?= $this->formElement($form->get('item_id')) ?>
+    </p>
+
+    <!-- Date -->
+    <p>
+        <?= $this->formLabel($form->get('date_time')) ?>
+        <?= $this->formElement($form->get('date_time')) ?>
+    </p>
+
+    <!-- Usrename -->
+    <p>
+        <?= $this->formLabel($form->get('username')) ?>
+        <?= $this->formElement($form->get('username')) ?>
+    </p>
+
+    <!-- Import -->
+    <p>
+        <?= $this->formLabel($form->get('imp_qty')) ?>
+        <?= $this->formElement($form->get('imp_qty')) ?>
+    </p>
+
+    <!-- Quantity in stock -->
+    <p>
+        <?= $this->formLabel($form->get('qty_in_stock')) ?>
+        <?= $this->formElement($form->get('qty_in_stock')) ?>
+    </p>
+
+    <!-- Type -->
+    <p>
+        <?= $this->formLabel($form->get('type')) ?>
+        <?= $this->formElement($form->get('type')) ?>
+    </p>
+
+    <!-- submit -->
+    <p>
+        <?= $this->formSubmit($form->get('submit')); ?>
+        <a class='btn btn-danger' href=<?= $this->url('profile/warehouse', ['action' => 'index']) ?>>Back</a>
+    </p>
+
+    <?= $this->form()->closeTag(); ?>
+</div>

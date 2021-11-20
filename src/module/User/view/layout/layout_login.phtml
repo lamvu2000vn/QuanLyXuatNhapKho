@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<?= $this->doctype() ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?= $this->headTitle('Laminas MVC Skeleton')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+            ->prependStylesheet($this->basePath('css/login_style.css'))
+            ->prependStylesheet($this->basePath('fontawesome/css/all.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+        ?>
+
+        <!-- Scripts -->
+        <?= $this->headScript() ?>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='row g-0'>
+                <div class='col-md-3 offset-2 left_form'>
+                    <img src="<?= $this->basePath('img/login_white_icon.png') ?>" class='login_image'>
+                    <h1 class='login_label'>LOGIN</h1>
+                </div>
+
+                <div class='col-md-5 right_form'>
+                    <div class='col-md-10 offset-1 login_element'>
+                        <?= $this->content ?>
+                        <hr>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+            
+        <?= $this->inlineScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery-3.5.1.min.js')) ?>
+    </body>
+</html>

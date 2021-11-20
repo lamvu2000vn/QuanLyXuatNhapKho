@@ -1,0 +1,67 @@
+<?php
+
+$title = 'Edit history';
+$this->headTitle($title);
+$this->layout('layout/admin'); ?>
+
+<div class='col-md-6 offset-3'>
+    <div style='text-align: right;'><h1>Edit History</h1></div><hr>
+
+    <?php 
+    $form->setAttribute('action', $this->url('profile/warehouse', ['action' => 'edit', 'id'=>$ware_id]));
+    $form->prepare();
+
+    echo $this->form()->openTag($form); ?>
+
+    <!-- ware_id & item_id -->
+    <p>
+        <?= $this->formHidden($form->get('ware_id')) ?>
+
+        <?= $this->formLabel($form->get('item_id')) ?>
+        <select class='form-select' disabled>
+            <option><?= $this->escapeHtml($item_name) ?></option>
+        </select>
+        <?= $this->formElement($form->get('item_id')) ?>
+    </p>
+
+    <!-- Date -->
+    <p>
+        <?= $this->formLabel($form->get('date_time')) ?>
+        <?= $this->formElement($form->get('date_time')) ?>
+        <input type="datetime-local" class='form-control' value=<?= $this->escapeHtml($date_time) ?> disabled>
+    </p>
+
+    <!-- Usrename -->
+    <p>
+        <?= $this->formLabel($form->get('username')) ?>
+        <?= $this->formElement($form->get('username')) ?>
+    </p>
+
+    <!-- Import -->
+    <p>
+        <?= $this->formLabel($form->get('imp_qty')) ?>
+        <?= $this->formElement($form->get('imp_qty')) ?>
+    </p>
+
+    <!-- Quantity in stock -->
+    <p>
+        <?= $this->formLabel($form->get('qty_in_stock')) ?>
+        <?= $this->formElement($form->get('qty_in_stock')) ?>
+    </p>
+
+    <!-- Type -->
+    <p>
+        <?= $this->formLabel($form->get('type')) ?>
+        <?= $this->formElement($form->get('type')) ?>
+        <select class='form-select' disabled>
+            <option><?php echo $type == 1 ? 'Import' : 'Export' ?></option>
+        </select>
+    </p>
+
+    <!-- submit -->
+    <p>
+        <?= $this->formSubmit($form->get('submit'));
+            $this->form()->closeTag(); ?>
+        <a class='btn btn-danger' href=<?= $this->url('profile/warehouse') ?>>Back</a>
+    </p>
+</div>

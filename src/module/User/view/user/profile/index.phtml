@@ -1,0 +1,62 @@
+<?php
+
+$title = "Home - Warehouse";
+$this->headTitle($title);
+$this->layout('layout/admin'); ?>
+
+<h1 style='text-align: center;'>WAREHOUSE</h1>
+<div class='top'>
+    <a href=<?= $this->url('profile/warehouse', ['action' => 'add']) ?> class='btn btn-primary'>Add History</a>
+</div>
+
+<!-- Modal delete -->
+<div class="modal fade" id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form id='del_form' method='POST'>
+        <div class="modal-header">
+          <h5 class="modal-title" id="label_delete"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure that you want to delete "<b id='name'></b>"
+            <input type='hidden' id='id'>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type='submit' class="btn btn-danger">Yes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Date</th>
+            <th>Username</th>
+            <th>Quantity</th>
+            <th>Quantity in stock</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($warehouses as $ware) : ?>
+        <tr>
+            <td><?php echo $ware['name'] ?></td>
+            <td><?php echo $ware['date_time']  ?></td>
+            <td><?php echo $ware['username'] ?></td>
+            <td><?php echo $ware['imp_qty'] ?></td>
+            <td><?php echo $ware['qty_in_stock']  ?></td>
+            <td><?php echo $ware['type'] == 1 ? "Import" : "Export" ?></td>
+            <td>
+                <a href=<?= $this->url('profile/warehouse', ['action' => 'edit', 'id'=>$ware['ware_id']])?> class='btn btn-info edit_button' id='edit_<?php echo $ware['ware_id'] ?>' data-id='<?= $ware['ware_id'] . '-' . $ware['item_id'] . '-' . $ware['qty_in_stock'] ?>' ><i class='fas fa-edit'></i></a>              
+                <a class='btn btn-danger delete_button' data-id='warehouse-<?php echo $ware['ware_id'] . '-' . $ware['name'] ?>' data-bs-target="#delete"><i class='fas fa-trash'></i></a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

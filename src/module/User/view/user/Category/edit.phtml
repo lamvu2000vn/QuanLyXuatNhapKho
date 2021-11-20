@@ -1,0 +1,36 @@
+<?php
+
+$title = 'edit category';
+$this->headTitle($title);
+$this->layout('layout/admin'); ?>
+<div class='container'>
+    <div class='col-md-6 offset-3'>
+        <div style='text-align: center;'><h1><?= $this->escapeHtml($title) ?></h1></div><hr>
+        <?php
+        $form->setAttribute('action', $this->url('profile/category', ['action' => 'edit','id'=>$id]));
+        $form->prepare();
+        ?>
+        <?=$this->form()->openTag($form);?>
+            <!--name-->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('name'));?>
+                <div class="form-group">
+                    <?=$this->formText($form->get('name'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('name'));?>
+                </div>
+            </div>
+            
+            <!--Button-->
+            <div class="mb-3">
+                <?=$this->formHidden($form->get('csrf'));?>
+                <div class="text-danger">
+                <?=$this->formElementErrors($form->get('csrf'));?>
+                </div>
+               <?=$this->formSubmit($form->get('editCategory'));?>
+            </div>
+            <!-- close form-->
+            <?=$this->form()->closeTag();?>
+    </div>
+</div>

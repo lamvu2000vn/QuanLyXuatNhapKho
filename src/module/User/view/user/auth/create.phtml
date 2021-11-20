@@ -1,0 +1,112 @@
+<?php
+$title=$this->translate('Sign Up');
+
+$this->headMeta()->appendName('keywords','Sign up ,Create,Join,New Account');
+$this->headMeta()->appendName('description','Create a new account');
+$this->headTitle($this->escapeHtml('title'));
+$form=$this->form;
+$form->setAttribute('login',$this->url('login'));
+$form->prepare();
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 shadow-sm">
+            <h3 class="mb-3 pt-2 text-md-center">
+                <?=$this->escapeHtml($this->translate('Create a new Account'));?>
+            </h3>
+
+            <?=$this->form()->openTag($form);?>
+            <span class="form-text text-muted pb-2">
+                <?=sprintf(
+                    $this->translate('Already have an account ? %sLogin here%s.'),
+                    '<a href="">','</a>'
+                );
+                ?>
+            </span>
+            
+            <!-- add the username input field-->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('username'));?>
+                <div class="form-group">
+                    <?=$this->formText($form->get('username'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('username'));?>
+                </div>
+            </div>
+            <!-- gender select field -->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('gender'));?>
+                <div class="form-group">
+                    <?=$this->formSelect($form->get('gender'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('gender'));?>
+                </div>
+            </div>
+            <!--email-->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('email'));?>
+                <div class="form-group">
+                    <?=$this->formEmail($form->get('email'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('email'));?>
+                </div>
+            </div>
+            <!-- confirm email address input field-->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('confirm_email'));?>
+                <div class="form-group">
+                    <?=$this->formEmail($form->get('confirm_email'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('confirm_email'));?>
+                </div>
+            </div>
+            <!-- birtrth day select field-->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('birthday'));?>
+                <div class="form-group">
+                    <?=$this->formDateSelect($form->get('birthday'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('birthday'));?>
+                </div>
+            </div>
+            <!-- password-->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('password'));?>
+                <div class="form-group">
+                    <?=$this->formPassword($form->get('password'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('password'));?>
+                </div>
+            </div>
+            <!--confirm_password-->
+            <div class="mb-3">
+                <?=$this->formLabel($form->get('confirm_password'));?>
+                <div class="form-group">
+                    <?=$this->formPassword($form->get('confirm_password'));?>
+                </div>
+                <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('confirm_password'));?>
+                </div>
+            </div>
+            <!--submit and csrf fiedl--> 
+            <div class="mb-3">
+                <?=$this->formHidden($form->get('csrf'));?>
+                <div class="text-danger">
+                <?=$this->formElementErrors($form->get('csrf'));?>
+                </div>
+               
+                    <?=$this->formSubmit($form->get('create_account'));?>
+               
+                
+            </div>
+            <!-- close form-->
+            <?=$this->form()->closeTag();?>
+        </div>
+    </div>
+</div>

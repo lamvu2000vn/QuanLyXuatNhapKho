@@ -1,0 +1,109 @@
+<?php
+
+$title = 'Edit Item';
+$this->headTitle($title);
+$this->layout('layout/admin'); ?>
+<div class='container'>
+    <div class='col-md-6 offset-3'>
+        <div style='text-align: center;'><h1><?= $this->escapeHtml($title) ?></h1></div><hr>
+    <div class='row'>
+        <div class='col-md-6'>
+            <?php
+            $form->setAttribute('action', $this->url('profile/item', ['action' => 'edit','id'=>$id]));
+            $form->prepare();
+            ?>
+            <?=$this->form()->openTag($form);?>
+                <!--id-->
+                <?=$this->formHidden($form->get('item_id'));?>
+                <!--name-->
+                <div class="mb-3">
+                    <?=$this->formLabel($form->get('name'));?>
+                    <div class="form-group">
+                        <?=$this->formText($form->get('name'));?>
+                    </div>
+                    <div class="text-danger">
+                        <?=$this->formElementErrors($form->get('name'));?>
+                    </div>
+                </div>
+                <!--Price-->
+                <div class="mb-3">
+                    <?=$this->formLabel($form->get('price'));?>
+                    <div class="form-group">
+                        <?=$this->formNumber($form->get('price'));?>
+                    </div>
+                    <div class="text-danger">
+                        <?=$this->formElementErrors($form->get('price'));?>
+                    </div>
+                </div>
+                <!--type-->
+                <div class="mb-3">
+                    <?=$this->formLabel($form->get('cat_id'));?>
+                    <div class="form-group">
+                        <?=$this->formSelect($form->get('cat_id'));?>
+                    </div>
+                    <div class="text-danger">
+                        <?=$this->formElementErrors($form->get('cat_id'));?>
+                    </div>
+                </div>
+                <!--quantity-->
+                <div class="mb-3">
+                    <?=$this->formLabel($form->get('qty'));?>
+                    <div class="form-group">
+                        <?=$this->formNumber($form->get('qty'));?>
+                    </div>
+                    <div class="text-danger">
+                        <?=$this->formElementErrors($form->get('qty'));?>
+                    </div>
+                </div>
+                <!--Button-->
+                <div class="mb-3">
+                    <?=$this->formHidden($form->get('csrf'));?>
+                    <div class="text-danger">
+                    <?=$this->formElementErrors($form->get('csrf'));?>
+                    </div>
+                <?=$this->formSubmit($form->get('addItem'));?>
+                </div>
+                <!-- close form-->
+                
+        </div>
+            <div class='col-md-6'>
+                <!-- image -->
+                <p>
+                    <?= $this->formLabel($form->get('image')) ?>
+                    <div id="preview"></div>
+                    <img src="<?= $this->basePath('img/No-image.jpg') ?>" id='img_add' style='width:100%; height: 250px ' >
+                    <span class='btn btn-outline-dark btn-file'>
+                        <?= $this->formElement($form->get('imageedit')) ?>Enter Image
+                    </span>
+                </p>
+            </div>
+        <?=$this->form()->closeTag();?>
+    </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+			var img = document.getElementById("img_add");
+			img.src ="<?= $this->basePath('img/hinhminhhoa/') ?><?php echo $image?>";
+				
+		   });
+    function addImage(input) {
+        const [file] = input.files
+        const preview = document.getElementById('preview')
+        const reader = new FileReader()
+
+        reader.onload = e => {
+          const img = document.createElement('img')
+          img.src = e.target.result
+          img.width = 200
+          img.height = 200
+          img.alt = 'file'
+
+          preview.appendChild(img)
+        }
+
+        reader.readAsDataURL(file)
+        document.getElementById('img_add').style.display = "none";
+      }
+</script> 

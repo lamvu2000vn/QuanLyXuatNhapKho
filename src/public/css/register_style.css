@@ -1,0 +1,105 @@
+body{
+    background-color: #92cbdf;
+    overflow-x: hidden;
+}
+
+.left_form{
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    background-color: #2596be;
+    margin-top: 170px;
+    height: 400px;
+    transition: 1s;
+}
+
+.left_form:hover{
+    background-color: black;
+}
+
+
+.right_form{
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    background-color: white;
+    margin-top: 170px;
+    height: 400px;
+}
+
+.register_image{
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    transition: 1s;
+}
+
+.register_image:hover{
+    width: 60%;
+}
+
+.register_label{
+    color: white;
+    text-align: center;
+    margin-top: 40px
+}
+
+.register_element{
+    margin-top: 50px
+}
+
+input[type=text]{
+    width:100%;
+    border-radius: 10px;
+    border: 1px solid gray;
+    padding:10px;
+    transition: 0.5s;
+    outline:none;
+}
+input[type=text]:focus{
+    border: 3px solid #2596be;
+}
+
+input[type=password]{
+    width:100%;
+    border-radius: 10px;
+    border: 1px solid gray;
+    padding:10px;
+    transition: 0.5s;
+    outline:none;
+}
+input[type=password]:focus{
+    border: 3px solid #2596be;
+}
+
+.button_submit{
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    background-color: #2596be;
+    color: white;
+    transition: 1s;
+}
+
+.button_submit:hover{
+    
+    background-color: black;
+    color: white;
+}
+
+.sign_up{
+    font-style: italic;
+    text-decoration: none;
+    transition: 0.5s;
+    padding: 7px;
+    float: right;
+    color: #2596be;
+}
+
+.sign_up:hover{
+    border-radius: 5px;
+    background-color: #2596be;
+    padding: 7px;
+    color: white;
+}

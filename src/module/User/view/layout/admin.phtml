@@ -1,0 +1,262 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<?= $this->doctype() ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?= $this->headTitle('Laminas MVC Skeleton')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('fontawesome/css/all.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+        ?>
+
+        <!-- Scripts -->
+        <?= $this->headScript() ?>
+
+        
+    </head>
+    <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href=<?= $this->url('profile', ['action' => 'index']) ?>>Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown" style='margin-right: 100px;'>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Usename
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item logout" href="#"><i class='fas fa-power-off' style='margin-right: 10px'></i>LOGOUT</a></li>
+                </ul>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Sidebar -->
+    <div class='sidebar'>
+    <div style='text-align: center; margin-top: 20px'><a href=<?= $this->url('profile')?> class='sidebar_home'>Admin</a></div><hr>
+        <div class='col-md-8 offset-2'>
+            <ul class='menu_sidebar'>
+                <li class='li_side'><a href=<?= $this->url('profile/warehouse', ['action' => 'index']) ?> class='sidebar_link'><i class='fas fa-warehouse' style='margin-right: 10px'></i>Warehouse</a></li>
+                <li class='li_side'><a href=<?= $this->url('profile/item', ['action' => 'index']) ?> class='sidebar_link'><i class='fas fa-box' style='margin-right: 10px'></i>Item</a></li>
+                <li class='li_side'><a href=<?= $this->url('profile/category', ['action' => 'index']) ?> class='sidebar_link'><i class='fas fa-list-ul' style='margin-right: 10px'></i>Category</a></li>
+                <li class='li_side'><a href=<?= $this->url('profile/account', ['action' => 'index']) ?> class='sidebar_link'><i class='fas fa-user-circle' style='margin-right: 10px'></i>Account</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class='content'>
+        <?= $this->content ?>
+    </div>
+    
+    <?= $this->inlineScript()
+        ->prependFile($this->basePath('js/bootstrap.min.js'))
+        ->prependFile($this->basePath('js/jquery-3.5.1.min.js')) ?>
+
+        <script>
+            // preview hình ảnh trước khi upload
+            function readURL(input, idIMG) { 
+                if (input.files && input.files[0]) { 
+                var reader = new FileReader(); 
+                reader.onload = function(e) { 
+                    $(idIMG).attr('src', e.target.result); 
+                } 
+                reader.readAsDataURL(input.files[0]); 
+                }       
+            }  
+
+            // kiểm tra chỉ dược phép upload hình ảnh
+            $(".inputfile").off('click').change(function() { 
+                var data = $(this).data('id');
+
+                var img = data.split(" ")[0];
+                var inp = data.split(" ")[1];
+
+                var fileName = $(inp).val();
+                
+                var idxDot = fileName.lastIndexOf(".") + 1;
+                var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+                if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
+                    readURL(this, img); 
+                }else{
+                    alert("Chỉ cho phép hình ảnh");
+                    $(inp).val(null);
+
+                    if(img == "#img_add"){    
+                        $(img).attr('src', '../img/No-image.jpg');
+                    } else{
+                        $(img).attr('src', '../../img/No-image.jpg');
+                    }
+                    
+                }   
+            });
+
+            // click mở modal delete
+            $('.delete_button').off('click').on('click', function(){
+                var data = $(this).data('id');
+
+                var type = data.split("-")[0];
+                var id = data.split("-")[1];
+                var name = data.split("-")[2];
+                
+                $('#name').html(name);
+                $('#id').val(id);
+
+                // category
+                if(type == 'category'){
+                    $('#label_delete').html('Delete Category');
+                    $('#del_form').attr('action', 'category/delete/' + id);
+                } else if(type == 'item'){ // item
+                    $('#label_delete').html('Delete Item');
+                    $('#del_form').attr('action', 'item/delete/' + id);
+                } else if(type == 'warehouse'){ // warehouse
+                    $('#label_delete').html('Delete Warehouse');
+                    $('#del_form').attr('action', 'warehouse/delete/' + id);
+                }
+                
+                $('#delete_modal').modal('show');
+            });
+
+            // hiển thị số lượng tồn
+            if($('#item_id').length){
+                // lấy item_id
+                var item_id = $('#item_id option:selected').val();
+
+                getQtyInStock(item_id);
+
+                $('#item_id').on('change', function(){
+                    item_id = $(this).val();
+                    getQtyInStock(item_id);
+                });
+            }
+
+            // hàm lấy số lượng tồn
+            function getQtyInStock(id){
+                // lấy đuôi url
+                var url = window.location.pathname;
+                url = url.substring(url.lastIndexOf('/') + 1);
+                
+                // nếu đuôi url là số (trang edit) thì đường dẫn đến getQtyInStock là ../../
+                url = $.isNumeric(url) ? '../../' : '../';
+                $.ajax({
+                    url: url + 'warehouse/getQtyInStock',
+                    type: 'POST',
+                    data: {'id':id},
+                    dataType:'json',
+                    success: function(data){
+                        // nếu số lượng = 0 thì xóa option export và gán số lượng tồn = 0
+                        if(!data[0]['status']){
+                            $("#type option[value='2']").remove();
+                            $('#qty_in_stock').val(0);
+                        } else{
+                            // thêm option export và gán số lượng tồn
+                            var qty = data[0]['qty'];
+                            $('#qty_in_stock').val(qty);
+
+                            // nếu option export chưa có thì thêm vào select
+                            if(!$("#type option[value='2']").length){
+                                $("#type").append(new Option("Export", "2"));
+                            }
+                            isExport(qty);
+                        }
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                });
+            }
+
+            // hàm kiểm tra chỉ được xuất với số lượng tối đa = số lượng tồn
+            function isExport(qty){
+                var type = $('#type option:selected').val();
+                if(type == 2){
+                    $('#imp_qty').attr('max', qty); 
+                }
+
+                $('#type').on('change', function(){
+                    // xuất kho
+                    if($(this).val() == 2){
+                        $('#imp_qty').attr('max', qty);   
+                    }else{
+                        $('#imp_qty').attr('max', 1000000);   
+                    }
+                });
+            }
+
+            // chỉ được phép chỉnh sửa history có ngày mới nhất của từng item
+            if($('.edit_button').length){
+                var arr = [];
+                var arrElement = [];
+
+                // thêm tất cả phần tử với class = edit_button vào mảng arr
+                $.each($('.edit_button'), function(){
+                    arr.push($(this).data('id'));
+                });
+
+                // tách chuỗi để lấy id, name, qty sau đó thêm vào mảng arrElement
+                for(var i = 0; i < arr.length; i++){
+                    var data = {
+                        'id' : arr[i].split("-")[0],
+                        'name' : arr[i].split("-")[1],
+                        'qty' : arr[i].split("-")[2],
+                    };
+
+                    arrElement.push(data);
+                }
+
+                // sắp xếp mảng arrElement theo tên item
+                // do từ đầu đã sắp xếp danh sách history theo ngày mới nhất
+                // nên sau khi sắp xếp mảng thì tên item đầu tiên sẽ có ngày mới nhất
+                arrElement.sort(function(a, b){
+                    var x = a.name.toLowerCase();
+                    var y = b.name.toLowerCase();
+                    if(x < y) { return -1;}
+                    else return 1;
+
+                    return 0;
+                });
+
+                // gắn flag = phần tử đầu tiên của mảng arrElement
+                var flag = arrElement[0];
+
+                // vì do chỉ lấy phần tử đầu tiên của item nên những phần tử cùng tên sẽ bị xóa đi
+                // vòng lặp for xóa các phần tử cùng tên
+                for(var i = 1; i < arrElement.length; i++){
+                    if(arrElement[i]['name'] == flag['name']){
+                        $('#edit_' + arrElement[i]['id']).remove();
+                    } else{
+                        // sau khi đến item khác tên thì gắn flag = item đó và tiếp tục xóa các phần tử cùng tên với nó
+                        flag = arrElement[i];
+                    }
+                }
+
+                // console.log(arrElement);
+            }
+
+        </script>
+    </body>
+</html>
