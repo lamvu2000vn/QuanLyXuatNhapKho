@@ -16,4 +16,4 @@
 
 * Do đây là một framework khá khó học, cộng đồng hỗ trợ không lớn và khoảng thời gian thực hiện
 không nhiều nên ứng dụng còn khá nhiều lỗi, chưa đúng quy trình, giao diện còn đơn giản
-và không đầy đủ các tính năng.
+và không đầy đủ các chức năng.
